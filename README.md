@@ -22,7 +22,7 @@ You need to add a Elasticsearch datasource to your 3.x+ Grafana
 
 Then to add annotation you have to add a search in your elasticsearch index for each type of annotation you want to add.
 
-![Screenshot of adding annotations](https://random.0x7b8.net/pics/grafana_add_annotations.png)
+![Screenshot of adding annotations](screenshots/grafana_add_annotations.png)
 
 As you can see on my screenshot I have different colors for Critical, Warning, Unknown and OK. They are sent from my monitoringsystem. Deploy and Manual is sent by CI-system and various manual one-off scripts.
 
