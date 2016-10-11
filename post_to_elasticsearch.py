@@ -1,9 +1,12 @@
-:q#!/usr/bin/env python2
+#!/usr/bin/env python2
 
 import elasticsearch
 import datetime
 import sys
 import getopt
+
+global SILENT
+SILENT=False
 
 
 def usage():
@@ -22,19 +25,24 @@ def post_to_es(options, timestamp):
     try:
         es = elasticsearch.Elasticsearch(host=options['es_host'], port=options['es_port'])
     except:
-        print "Elasticsearch error"
-        sys.exit(1)
+        if SILENT is False:
+            print "Elasticsearch error"
+            sys.exit(1)
+        else:
+            sys.exit(0)
     try:
         es.index(index=options['index'], doc_type='automation',
                  body={'@timestamp': timestamp,
                        'message': options['message'],
                        'tags': options['tag']})
     except:
-        print "Elasticsearch index error"
-        sys.exit(1)
+        if SILENT is False:
+            print "Elasticsearch index error"
+            sys.exit(1)
+        else:
+            sys.exit(0)
 
-
-def main(options, timestamp):
+def main(options):
     timestamp = datetime.datetime.utcnow()
     post_to_es(options, timestamp)
 
@@ -43,7 +51,7 @@ def parse_options(argv):
     options = {'es_host': '127.0.0.1',
                'es_port': 9200}
     try:
-        opts, args = getopt.getopt(argv, 'h:p:t:i:m:', ['host=', 'port=', 'tag=', 'index=', 'message=', 'help'])
+        opts, args = getopt.getopt(argv, 'qh:p:t:i:m:', ['host=', 'port=', 'tag=', 'index=', 'message=', 'help', 'quite'])
     except getopt.GetoptError, e:
         print "Option error %s" % e
         sys.exit(1)
@@ -61,6 +69,10 @@ def parse_options(argv):
             options['index'] = arg
         elif opt in ('-m', '--message'):
             options['message'] = arg
+        elif opt in ('-q', '--quite'):
+            global SILENT
+            SILENT=True
+
     if 'message' not in options:
         print "Message is mandatory option"
         usage()
