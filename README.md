@@ -3,6 +3,15 @@
 
 Here is some utilites I have written to interact with elasticsearch
 
+## es_post.sh
+
+This is a bash script that uses curl or wget to post to elasticsearch. You configure inside script
+
+    es_server=localhost
+    es_port=9200
+    es_type=automation
+    es_index=info
+
 ### post to elasticsearch.py
 
 ![Screenshot of annotations](screenshots/grafana_annotations.png)
@@ -10,9 +19,8 @@ Here is some utilites I have written to interact with elasticsearch
 This little utility will add a small item to your desired index.
 
 Usage:
-<pre>
-post_to_elasticsearch.py --index=alerts --tag=alerts,warning --host=localhost --port=9200 --message="System load is slightly high"
-</pre>
+
+    post_to_elasticsearch.py --index=alerts --tag=alerts,warning --host=localhost --port=9200 --message="System load is slightly high"
 
 index, tag and message is mandatory arguments. host will default to localhost and port will default to 9200.
 
