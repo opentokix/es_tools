@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-"""
-annoations
-GF5KFCTY1RXP
-api_key: d1RLaGc0WUJiSHBOX1plQVROcUQ6VDJEZ1Zzd3hSRU9jdVBnMldqT1JVdw==
-{"id":"wTKhg4YBbHpN_ZeATNqD","name":"annotations","api_key":"T2DgVswxREOcuPg2WjORUw","encoded":"d1RLaGc0WUJiSHBOX1plQVROcUQ6VDJEZ1Zzd3hSRU9jdVBnMldqT1JVdw=="}
-
-"""
 import sys
 import elasticsearch
 import click
