@@ -6,16 +6,16 @@ from base64 import b64decode
 from datetime import datetime
 
 @click.command()
-@click.option('--port', '-P', type=str, required=False, default='9200', help="port of elasticsearch server")
-@click.option('--host', '-H', type=str, required=True, default='localhost', help="Host of elasticsearch server")
-@click.option('--index', '-i', type=str, required=True, help="Index for annotations")
-@click.option('--invoker', type=str, required=True, help="Who triggered this command")
-@click.option('--tags', type=str, required=False, default=None, help="List of tags for the annotation")
-@click.option('--message', type=str, required=True, help="The message for the annotation")
-@click.option('--token', '-u', type=str, required=False, help="User for elastic search")
-@click.option('--secret', '-p', type=str, required=False, help="User for elasticsearch")
-@click.option('--scheme', default='https', type=click.Choice(['http', 'https']), help="Use http or https")
-@click.option('--enctoken', default=None, type=str, help="Base64 encoded token from Kibana")
+@click.option('--port', '-P', envvar="PORT", type=str, required=False, default='9200', help="port of elasticsearch server")
+@click.option('--host', '-H', envvar="HOST", type=str, required=True, default='localhost', help="Host of elasticsearch server")
+@click.option('--index', '-i', envvar="INDEX", type=str, required=True, help="Index for annotations")
+@click.option('--invoker', envvar="INVOKER", type=str, required=True, help="Who triggered this command")
+@click.option('--tags', envvar="TAGS", type=str, required=False, default=None, help="List of tags for the annotation")
+@click.option('--message', envvar="MESSAGE", type=str, required=True, help="The message for the annotation")
+@click.option('--token', '-u', envvar="TOKEN", type=str, required=False, help="User for elastic search")
+@click.option('--secret', '-p', envvar="SECRET", type=str, required=False, help="User for elasticsearch")
+@click.option('--scheme', envvar="SCHEME", default='https', type=click.Choice(['http', 'https']), help="Use http or https")
+@click.option('--enctoken', envvar="ENCTOKEN", default=None, type=str, help="Base64 encoded token from Kibana")
 def main(host, port, index, invoker, tags, message, token, secret, scheme, enctoken):
   if enctoken:
     decoded_token = b64decode(enctoken).decode('ascii')
@@ -42,4 +42,4 @@ def main(host, port, index, invoker, tags, message, token, secret, scheme, encto
     sys.exit(1)
 
 if __name__ == "__main__":
-  main()
+  main(auto_envvar_prefix='ANNOTATION')
